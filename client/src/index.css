@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .sidebarlist{
+       @apply w-40 px-3 rounded-lg h-7 
+    }
+}
