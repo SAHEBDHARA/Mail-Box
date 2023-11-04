@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/Auth');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
@@ -19,6 +20,7 @@ mongoose.connect(URL, {
 });
 
 app.use(express.json()); // Body parsing middleware
+app.use(cors()); 
 
 // Example routes
 app.get('/', (req, res) => {

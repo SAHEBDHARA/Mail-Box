@@ -14,7 +14,6 @@ const bcrypt = require("bcrypt");
         username:req.body.username,
         email:req.body.email,
         password:hashedPassword,
-    
       });
 
 

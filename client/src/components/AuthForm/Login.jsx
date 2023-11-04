@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import "./Register.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+// import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -10,6 +15,8 @@ function LoginForm() {
     agreedTerms: false,
   });
   const [passwordError, setPasswordError] = useState("");
+  const Navigate = useNavigate();
+  const {dispatch} = useContext(AuthContext)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,17 +26,34 @@ function LoginForm() {
       [name]: value,
     });
 
-    if (name === 'password' && value.length > 0 && value.length < 8) {
+    if (name === 'password' && value.length > 0 && value.length < 8 && agreedTerms) {
       setPasswordError("Password should be at least 8 characters");
-    } else {
-      setPasswordError("");
     }
+     else {
+      setPasswordError("");
+      
+    }
+   
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData);
-    // Here you can perform further actions like sending the form data to an API, etc.
+    try {
+      const response = await axios.post('http://localhost:3000/api/auth/login', {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response.status === 200) {
+        console.log('Login successful');
+        dispatch({ type: "LOGIN", payload: formData });
+        Navigate('/')
+      } else {
+        console.error('Login error:', response.data);
+      }
+    } catch (error) {
+      console.error('Axios error:', error);
+    }
   };
 
   return (

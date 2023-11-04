@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Register.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -12,30 +14,50 @@ function RegisterForm() {
     agreedTerms: false,
   });
   const [passwordError, setPasswordError] = useState("");
+  const Navigate = useNavigate()
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const { name, value, type, checked } = e.target;
-    const val = type === 'checkbox' ? checked : value;
+    const val = type === "checkbox" ? checked : value;
 
     setFormData({
       ...formData,
       [name]: val,
     });
 
-    if (name === 'password' && value.length > 0 && value.length < 8) {
-        setPasswordError("Password should be at least 8 characters");
-      } else {
-        setPasswordError("");
-      }
+    if (name === "password" && value.length > 0 && value.length < 8) {
+      setPasswordError("Password should be at least 8 characters");
+    } else {
+      setPasswordError("");
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.repeatPassword) {
       setPasswordError("Passwords do not match!");
     } else {
       setPasswordError("");
-      console.log(formData);
+      const user = {
+        username: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }
+      console.log(user)
+
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/auth/resister", user);
+
+        if (response.status === 200) {
+          console.log("User registered successfully");
+          Navigate('/login')
+        } else {
+          console.error("Registration error:", response.data);
+        }
+      } catch (error) {
+        console.error("Axios error:", error);
+      }
     }
   };
 
@@ -111,11 +133,22 @@ function RegisterForm() {
                 </label>
               </div>
             </div>
-            <button type="submit" className="btn btn-lg w-100 gradient-custom-4">
+            <button
+              type="submit"
+              className="btn btn-lg w-100 gradient-custom-4"
+            >
               Register
             </button>
-            <p> Have already an account? <Link to="/login">Login</Link></p>
-            {passwordError && <p className="d-flex flex-row justify-content-center gradient-custom-5"> {passwordError}</p>}
+            <p>
+              {" "}
+              Have already an account? <Link to="/login">Login</Link>
+            </p>
+            {passwordError && (
+              <p className="d-flex flex-row justify-content-center gradient-custom-5">
+                {" "}
+                {passwordError}
+              </p>
+            )}
           </form>
         </div>
       </div>
