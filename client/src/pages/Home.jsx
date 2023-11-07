@@ -1,8 +1,7 @@
 import React from 'react'
 import NavbarComponent from '../components/Navbar/Navbar'
-// import EmailEditor from '../components/EmailEditor/EmailEditor'
 import Sidebar from '../components/Sidebar/Sidebar'
-import EmailTextEditor from '../model/EmailTextEditor'
+import Emails from '../components/EmailList/Emails'
 
 
 const Home = () => {
@@ -10,8 +9,8 @@ const Home = () => {
     <div>
         <NavbarComponent/>
         <div className='flex flex-row'>
-          <Sidebar />
-          {/* <EmailEditor/> */}
+          <Sidebar  />
+         <Emails/>
         </div>
     </div>
   )

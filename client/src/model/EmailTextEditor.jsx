@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
-const EmailTextEditor = ({ onClose }) => {
+
+const EmailTextEditor = ({ onClose,   }) => {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [isOpen, setIsOpen] = useState(true);
+  const {currentUser} = useContext(AuthContext)
+
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -18,16 +23,27 @@ const EmailTextEditor = ({ onClose }) => {
     setMessage(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sending email to:', email);
-    console.log('Subject:', subject);
-    console.log('Message:', message);
-    setEmail('');
-    setSubject('');
-    setMessage('');
-    // Close the modal
+   const emailSchima = {
+    sender: currentUser.email,
+    recipientEmail:email,
+    subject: subject,
+    body:message
+   }
+   // posting data 
+ try {
+   const response = await axios.post(
+    "http://localhost:3000/api/email/send", emailSchima);
+    if(response.status === 200) {
+      console.log("email sent successfully")
     onClose();
+    }else{
+      console.log("registration error: ", response.data)
+    }
+ } catch (error) {
+  console.log("Axios error: ", error)
+ }
   };
 
   return (

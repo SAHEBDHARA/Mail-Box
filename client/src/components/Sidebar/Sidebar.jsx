@@ -18,7 +18,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="m-7 w-44 space-y-3 border h-screen p-2">
+    <div className="m-7 w-44 space-y-3 border p-2">
       <div className="flex flex-col justify-center items-center bg-[#C2E7FF] rounded-lg h-12 w-28">
         <button className="" onClick={openComposeModal}>Compose</button>
       </div>
@@ -51,7 +51,7 @@ const Sidebar = () => {
         </ul>
       </div>
       {isComposeModalOpen && (
-        <EmailTextEditor onClose={closeComposeModal} />
+        <EmailTextEditor onClose={closeComposeModal}  />
       )}
     </div>
   );

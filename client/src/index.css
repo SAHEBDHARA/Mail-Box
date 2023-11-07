@@ -9,4 +9,13 @@
     .inputField{
         @apply space-y-5 pb-8 border-gray-500 
     }
+    .emailListContainer{
+        background: #aaaaaa;
+        border-radius: 5px;
+    }
+ .emailListContainer:hover{
+background: #d0d0d0;
+transition: all .2s;
+border: solid 2px rgb(172, 172, 172) ;
+}
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/Auth');
+const emailRoute = require('./routes/Post');
 const cors = require('cors');
 
 const app = express();
@@ -19,6 +20,7 @@ mongoose.connect(URL, {
   console.error('Error connecting to MongoDB:', err);
 });
 
+
 app.use(express.json()); // Body parsing middleware
 app.use(cors()); 
 
@@ -36,6 +38,7 @@ app.post('/submit', (req, res) => {
 });
 
 app.use("/api/auth",authRoute);
+app.use("/api/email",emailRoute);
 
 // Handling 404 errors
 app.use((req, res) => {
