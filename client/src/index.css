@@ -6,4 +6,7 @@
     .sidebarlist{
        @apply w-40 px-3 rounded-lg h-7 
     }
+    .inputField{
+        @apply space-y-5 pb-8 border-gray-500 
+    }
 }

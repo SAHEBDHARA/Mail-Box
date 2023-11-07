@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import EmailTextEditor from "./model/EmailTextEditor";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -24,6 +25,7 @@ function App() {
             </RequireAuth>
           }
         />
+       
 
         <Route path="/register" Component={RegisterForm} />
         <Route path="/login" Component={LoginForm} />
