@@ -115,6 +115,7 @@ const EmailTextEditor = ({ onClose,   }) => {
           </div>
         </div>
       ) : null}
+      
     </>
   );
 };

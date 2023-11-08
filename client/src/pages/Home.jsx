@@ -1,7 +1,7 @@
 import React from 'react'
 import NavbarComponent from '../components/Navbar/Navbar'
 import Sidebar from '../components/Sidebar/Sidebar'
-import Emails from '../components/EmailList/Emails'
+import Emails from '../components/Inbox/Emails'
 
 
 const Home = () => {
@@ -10,7 +10,7 @@ const Home = () => {
         <NavbarComponent/>
         <div className='flex flex-row'>
           <Sidebar  />
-         <Emails/>
+          <Emails/>
         </div>
     </div>
   )

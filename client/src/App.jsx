@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
-import EmailTextEditor from "./model/EmailTextEditor";
+import List from "./components/list/List";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -26,6 +26,22 @@ function App() {
           }
         />
        
+        <Route
+          path="/inbox"
+          element={
+            <RequireAuth>
+              <List activeComponent="inbox" />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/sent"
+          element={
+            <RequireAuth>
+              <List activeComponent="sent" />
+            </RequireAuth>
+          }
+        />
 
         <Route path="/register" Component={RegisterForm} />
         <Route path="/login" Component={LoginForm} />
