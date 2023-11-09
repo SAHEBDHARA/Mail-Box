@@ -7,6 +7,7 @@ import axios from "axios";
 const Emails = () => {
   const { currentUser } = useContext(AuthContext);
   const [emailData, setEmailData] = useState([]);
+  const [deleteId, setDeleteId] = useState("");
 
   const fetchData = async () => {
     try {
@@ -28,10 +29,14 @@ const Emails = () => {
       console.error("Error: ", err);
     }
   };
-
+  const handleDelete = (deletedId) => {
+    // Update state to remove the deleted email
+    // setEmailData((prevEmails) => prevEmails.filter((email) => email._id !== deletedId));
+    setDeleteId(deletedId);
+  };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [deleteId]);
 
   return (
     <div className="mt-10 flex flex-col w-full">
@@ -42,6 +47,7 @@ const Emails = () => {
           name={email.username}
           Ctime={email.createdAt}
           sub={email.subject}
+          onDelete={handleDelete}
         />
       ))}
     </div>
