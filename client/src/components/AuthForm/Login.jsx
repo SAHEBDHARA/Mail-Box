@@ -42,10 +42,10 @@ function LoginForm() {
         email: formData.email,
         password: formData.password,
       });
-
       if (response.status === 200) {
+        console.log(response.data)
         console.log('Login successful');
-        dispatch({ type: "LOGIN", payload: formData });
+        dispatch({ type: "LOGIN", payload: response });
         Navigate('/')
       } else {
         console.error('Login error:', response.data);

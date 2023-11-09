@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-// import SentEmail from "./SentEmail";
+import { Link } from "react-router-dom";
 
-const SentEmails = ({ name, sub, Ctime }) => {
+const SentEmails = ({ name, sub, Ctime, id }) => {
   // console.log(Ctime)
   const date = new Date(Ctime);
   const hours = date.getHours() % 12 || 12; // Ensure it's in 12-hour format
@@ -13,11 +13,13 @@ const SentEmails = ({ name, sub, Ctime }) => {
 
   return (
     <div className="emailListContainer w-[95%] h-10  mb-2 cursor-pointer">
+        <Link to={`/email/${id}`}>
       <div className="flex flex-row items-center justify-between">
         <h1 className="px-4 py-2 font-bold text-[17px] capitalize">{name}</h1>
         <p>{sub}</p>
         <p className="px-4">{formattedTime}</p>
       </div>
+      </Link>
     </div>
   );
 };

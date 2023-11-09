@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import List from "./components/list/List";
+import Openemail from "./components/OpenEmail/Openemail";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -39,6 +40,14 @@ function App() {
           element={
             <RequireAuth>
               <List activeComponent="sent" />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/email/:id"
+          element={
+            <RequireAuth>
+              <List activeComponent="single"  />
             </RequireAuth>
           }
         />

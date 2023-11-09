@@ -18,7 +18,7 @@ const Emails = () => {
         console.log("Email data retrieved successfully");
         const allEmails = response.data; // This is an array of all email objects
         const filteredEmails = allEmails.filter(
-          (email) => email.recipientEmail === currentUser.email
+          (email) => email.recipientEmail === currentUser.data.email
         );
         setEmailData(filteredEmails);
       } else {
@@ -38,7 +38,8 @@ const Emails = () => {
       {emailData.map((email) => (
         <EmailList
           key={email._id}
-          name={email.sender}
+          id={email._id}
+          name={email.username}
           Ctime={email.createdAt}
           sub={email.subject}
         />

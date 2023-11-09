@@ -7,8 +7,9 @@
        @apply w-40 px-3 rounded-lg h-7 
     }
     .inputField{
-        @apply space-y-5 pb-8 border-gray-500 
+        @apply space-y-5 pb-8 border-gray-500 outline-none
     }
+   
     .emailListContainer{
         background: #aaaaaa;
         border-radius: 5px;

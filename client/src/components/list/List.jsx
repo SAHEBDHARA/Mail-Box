@@ -5,6 +5,8 @@ import NavbarComponent from "../Navbar/Navbar";
 import Emails from "../Inbox/Emails";
 // import SentBox from "../sentbox/SentBox";
 import SentEmails from "../sentbox/SentEmail";
+import Openemail from "../OpenEmail/Openemail";
+
 
 const List = ({activeComponent }) => {
   let componentToRender;
@@ -16,6 +18,9 @@ const List = ({activeComponent }) => {
       break;
     case "sent":
       componentToRender = <SentEmails />;
+      break;
+    case "single":
+      componentToRender = <Openemail />;
       break;
       default:
         componentToRender = <Emails />;

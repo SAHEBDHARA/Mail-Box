@@ -10,7 +10,7 @@ const EmailTextEditor = ({ onClose,   }) => {
   const [isOpen, setIsOpen] = useState(true);
   const {currentUser} = useContext(AuthContext)
 
-
+console.log(currentUser)
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -26,12 +26,14 @@ const EmailTextEditor = ({ onClose,   }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
    const emailSchima = {
-    sender: currentUser.email,
+
+    sender: currentUser.data.email,
+    username: currentUser.data.username,
     recipientEmail:email,
     subject: subject,
     body:message
    }
-   // posting data 
+   // posting data ww
  try {
    const response = await axios.post(
     "http://localhost:3000/api/email/send", emailSchima);

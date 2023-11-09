@@ -17,7 +17,7 @@ console.log(currentUser)
         <Navbar.Brand href="#home">Email</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <h1 className="mr-3">{currentUser.email}</h1>
+          <h1 className="mr-3">{currentUser.data.username}</h1>
           <Navbar.Text onClick={ToggleLogout}>
             <a className="cursor-pointer outline rounded-sm px-1 py-1">Logout</a>
           </Navbar.Text>

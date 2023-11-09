@@ -3,10 +3,11 @@ const Email = require('../models/email');
 
 router.post("/send", async (req, res) => {
   try {
-    const { sender, recipientEmail, subject, body } = req.body;
+    const { sender, username, recipientEmail, subject, body } = req.body;
 
     const email = new Email({
       sender,
+      username,
       recipientEmail,
       subject,
       body,
