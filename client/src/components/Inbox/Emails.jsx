@@ -30,8 +30,6 @@ const Emails = () => {
     }
   };
   const handleDelete = (deletedId) => {
-    // Update state to remove the deleted email
-    // setEmailData((prevEmails) => prevEmails.filter((email) => email._id !== deletedId));
     setDeleteId(deletedId);
   };
   useEffect(() => {
