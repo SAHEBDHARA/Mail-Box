@@ -29,6 +29,7 @@ const Emails = () => {
       console.error("Error: ", err);
     }
   };
+  
   const handleDelete = (deletedId) => {
     setDeleteId(deletedId);
   };

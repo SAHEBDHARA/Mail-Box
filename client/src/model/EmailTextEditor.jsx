@@ -1,16 +1,19 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 
-
-const EmailTextEditor = ({ onClose,   }) => {
-  const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
+const EmailTextEditor = ({ onClose }) => {
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isOpen, setIsOpen] = useState(true);
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
 
-console.log(currentUser)
+  console.log(currentUser);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -19,33 +22,43 @@ console.log(currentUser)
     setSubject(e.target.value);
   };
 
-  const handleMessageChange = (e) => {
-    setMessage(e.target.value);
+  // const handleMessageChange = (e) => {
+  //   setMessage(e.target.value);
+  //   console.log(setMessage);
+  // };
+
+  const handleMessageChange = (editorState) => {
+    setEditorState(editorState);
+   
+    console.log(setEditorState)
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   const emailSchima = {
-
-    sender: currentUser.data.email,
-    username: currentUser.data.username,
-    recipientEmail:email,
-    subject: subject,
-    body:message
-   }
-   // posting data ww
- try {
-   const response = await axios.post(
-    "http://localhost:3000/api/email/send", emailSchima);
-    if(response.status === 200) {
-      console.log("email sent successfully")
-    onClose();
-    }else{
-      console.log("registration error: ", response.data)
+    const contentState = editorState.getCurrentContent();
+    const rawMessage = JSON.stringify(convertToRaw(contentState));
+    const emailSchima = {
+      sender: currentUser.data.email,
+      username: currentUser.data.username,
+      recipientEmail: email,
+      subject: subject,
+     body: rawMessage,
+    };
+    // posting data ww
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/email/send",
+        emailSchima
+      );
+      if (response.status === 200) {
+        console.log("email sent successfully");
+        onClose();
+      } else {
+        console.log("registration error: ", response.data);
+      }
+    } catch (error) {
+      console.log("Axios error: ", error);
     }
- } catch (error) {
-  console.log("Axios error: ", error)
- }
   };
 
   return (
@@ -56,13 +69,16 @@ console.log(currentUser)
             <div className="fixed inset-0 transition-opacity" onClick={onClose}>
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+            &#8203;
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <form onSubmit={handleSubmit}>
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:text-left w-full">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">Compose Email</h3>
+                      <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        Compose Email
+                      </h3>
                       <div className="mt-2">
                         <div className="mt-2">
                           <input
@@ -72,7 +88,6 @@ console.log(currentUser)
                             onChange={handleEmailChange}
                             className="inputField w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             placeholder="Enter email address"
-                            
                           />
                         </div>
                         <div className="mt-2">
@@ -85,13 +100,21 @@ console.log(currentUser)
                           />
                         </div>
                         <div className="mt-2">
-                          <textarea
+                          {/* <textarea
                             value={message}
                             onChange={handleMessageChange}
                             className=" inputField w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             placeholder="Enter your message"
                             rows="4"
-                          ></textarea>
+                          ></textarea> */}
+                          <Editor
+                            editorState={editorState}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                            onEditorStateChange={handleMessageChange}
+                          />
+                          
                         </div>
                       </div>
                     </div>
@@ -117,7 +140,6 @@ console.log(currentUser)
           </div>
         </div>
       ) : null}
-      
     </>
   );
 };
