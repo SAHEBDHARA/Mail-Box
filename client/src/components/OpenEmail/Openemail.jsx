@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ReactHtmlParser from 'react-html-parser';
 
 const Openemail = () => {
   const { id } = useParams();
@@ -52,7 +53,8 @@ const Openemail = () => {
       <div className="time text-gray-600">{emailData[0].updatedAt}</div>
     </div>
     <div className="body">
-      <p className="text-sm">{emailData[0].body}</p>
+      {/* {emailData[0].body} */}
+      {ReactHtmlParser(emailData[0].body)} 
     </div>
   </div>
       )}

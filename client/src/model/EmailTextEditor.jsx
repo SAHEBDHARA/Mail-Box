@@ -1,50 +1,48 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
+import JoditEditor from 'jodit-react';
 
 const EmailTextEditor = ({ onClose }) => {
+const editor = useRef(null);
+
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const { currentUser } = useContext(AuthContext);
 
-  console.log(currentUser);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
   const handleSubjectChange = (e) => {
     setSubject(e.target.value);
+    // console.log("This is the content",content)
   };
 
-  // const handleMessageChange = (e) => {
-  //   setMessage(e.target.value);
-  //   console.log(setMessage);
+  // const handleContentChange = (e) => {
+  //   // setMessage(e.target.value);
+  //   setContent(content)
+  //   console.log(content);
   // };
-
-  const handleMessageChange = (editorState) => {
-    setEditorState(editorState);
-   
-    console.log(setEditorState)
+  const handleContentChange = (newContent) => {
+    setContent(newContent);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const contentState = editorState.getCurrentContent();
-    const rawMessage = JSON.stringify(convertToRaw(contentState));
+
     const emailSchima = {
       sender: currentUser.data.email,
       username: currentUser.data.username,
       recipientEmail: email,
       subject: subject,
-     body: rawMessage,
+     body: content,
     };
-    // posting data ww
     try {
       const response = await axios.post(
         "http://localhost:3000/api/email/send",
@@ -107,14 +105,18 @@ const EmailTextEditor = ({ onClose }) => {
                             placeholder="Enter your message"
                             rows="4"
                           ></textarea> */}
-                          <Editor
+                          {/* <Editor
                             editorState={editorState}
                             toolbarClassName="toolbarClassName"
                             wrapperClassName="wrapperClassName"
                             editorClassName="editorClassName"
                             onEditorStateChange={handleMessageChange}
+                          /> */}
+                          <JoditEditor
+                          ref={editor}
+                          value={content}
+                          onChange={handleContentChange }
                           />
-                          
                         </div>
                       </div>
                     </div>
