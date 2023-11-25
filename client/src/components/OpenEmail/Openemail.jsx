@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactHtmlParser from 'react-html-parser';
 
+
 const Openemail = () => {
   const { id } = useParams();
   const [emailData, setEmaildata] = useState([]);

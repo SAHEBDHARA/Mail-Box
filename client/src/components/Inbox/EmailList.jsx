@@ -42,7 +42,6 @@ const EmailList = ({ name, sub, Ctime, id, onDelete }) => {
       </Link>
       <div className="flex space-x-2 absolute top-1 ml-[1000px]">
       <button className="bg-red-300 rounded-lg px-1 hover:bg-red-500" onClick={handleDeleteClick}>Delete</button>
-      <div className="mx-2 bg-slate-500 rounded-lg px-1 hover:bg-white"> star</div>
       </div>
     </div>
   );

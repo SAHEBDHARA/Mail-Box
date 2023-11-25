@@ -37,26 +37,8 @@ const Sidebar = () => {
               Inbox
             </li>
           </Link>
-          <Link to="/stared">
-            <li
-              className={`sidebarlist cursor-pointer ${
-                activeItem === 1 ? "bg-[#C2E7FF]" : ""
-              }`}
-              onClick={() => handleItemClick(1)}
-            >
-              Stared
-            </li>
-          </Link>
-          <Link to="/important">
-            <li
-              className={` sidebarlist  cursor-pointer ${
-                activeItem === 2 ? "bg-[#C2E7FF]" : ""
-              }`}
-              onClick={() => handleItemClick(2)}
-            >
-              Important
-            </li>
-          </Link>
+          
+          
           <Link to="/sent">
             <li
               className={`  sidebarlist cursor-pointer ${
